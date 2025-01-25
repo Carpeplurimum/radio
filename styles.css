@@ -1,51 +1,69 @@
-const rdsDisplay = document.getElementById('rds-display');
-const stationInfo = document.getElementById('station-info');
-const powerBtn = document.getElementById('power-btn');
-const tuneUpBtn = document.getElementById('tune-up-btn');
-const tuneDownBtn = document.getElementById('tune-down-btn');
-const colorBtn = document.getElementById('color-btn');
-
-const stations = [
-    { frequency: '98.5', name: 'Estación 1' },
-    { frequency: '101.2', name: 'Estación 2' },
-    { frequency: '104.7', name: 'Estación 3' },
-    { frequency: '107.3', name: 'Estación 4' }
-];
-
-let currentStationIndex = 0;
-let isPoweredOn = false;
-
-function updateRDS() {
-    if (isPoweredOn) {
-        stationInfo.textContent = `FM ${stations[currentStationIndex].frequency} - ${stations[currentStationIndex].name}`;
-    } else {
-        stationInfo.textContent = 'Apagado';
-    }
+body {
+    font-family: Arial, sans-serif;
+    background-color: transparent; /* Fondo transparente */
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
-powerBtn.addEventListener('click', () => {
-    isPoweredOn = !isPoweredOn;
-    updateRDS();
-});
+.radio-container {
+    background-color: rgba(51, 51, 51, 0.8); /* Fondo semi-transparente */
+    border-radius: 15px;
+    padding: 20px;
+    width: 400px; /* Ancho un poco mayor */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
 
-tuneUpBtn.addEventListener('click', () => {
-    if (isPoweredOn) {
-        currentStationIndex = (currentStationIndex + 1) % stations.length;
-        updateRDS();
-    }
-});
+.rds-display {
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo semi-transparente */
+    color: #0f0;
+    font-family: 'Courier New', monospace;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-tuneDownBtn.addEventListener('click', () => {
-    if (isPoweredOn) {
-        currentStationIndex = (currentStationIndex - 1 + stations.length) % stations.length;
-        updateRDS();
-    }
-});
+#station-info {
+    font-size: 18px;
+}
 
-colorBtn.addEventListener('click', () => {
-    const colors = ['#0f0', '#00f', '#f00', '#ff0', '#0ff', '#f0f'];
-    const randomColor = colors[Math.floor(Math.random() * colors.length)];
-    rdsDisplay.style.color = randomColor;
-});
+.controls {
+    display: flex;
+    justify-content: space-between;
+}
 
-updateRDS();
+.left-controls, .right-controls {
+    display: flex;
+    gap: 10px; /* Espacio entre botones */
+}
+
+.btn-3d {
+    background-color: #444;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 5px #333; /* Efecto 3D */
+    transition: all 0.2s ease;
+}
+
+.btn-3d:hover {
+    background-color: #555;
+    box-shadow: 0 3px #333; /* Efecto 3D al hacer hover */
+    transform: translateY(2px); /* Movimiento hacia abajo */
+}
+
+.btn-3d:active {
+    background-color: #666;
+    box-shadow: 0 1px #333; /* Efecto 3D al hacer clic */
+    transform: translateY(4px); /* Movimiento hacia abajo */
+}
