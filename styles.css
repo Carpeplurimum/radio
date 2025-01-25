@@ -1,54 +1,51 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #222;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+const rdsDisplay = document.getElementById('rds-display');
+const stationInfo = document.getElementById('station-info');
+const powerBtn = document.getElementById('power-btn');
+const tuneUpBtn = document.getElementById('tune-up-btn');
+const tuneDownBtn = document.getElementById('tune-down-btn');
+const colorBtn = document.getElementById('color-btn');
+
+const stations = [
+    { frequency: '98.5', name: 'Estación 1' },
+    { frequency: '101.2', name: 'Estación 2' },
+    { frequency: '104.7', name: 'Estación 3' },
+    { frequency: '107.3', name: 'Estación 4' }
+];
+
+let currentStationIndex = 0;
+let isPoweredOn = false;
+
+function updateRDS() {
+    if (isPoweredOn) {
+        stationInfo.textContent = `FM ${stations[currentStationIndex].frequency} - ${stations[currentStationIndex].name}`;
+    } else {
+        stationInfo.textContent = 'Apagado';
+    }
 }
 
-.radio-container {
-    background-color: #333;
-    border-radius: 15px;
-    padding: 20px;
-    width: 300px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-}
+powerBtn.addEventListener('click', () => {
+    isPoweredOn = !isPoweredOn;
+    updateRDS();
+});
 
-.rds-display {
-    background-color: #000;
-    color: #0f0;
-    font-family: 'Courier New', monospace;
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
-    margin-bottom: 20px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+tuneUpBtn.addEventListener('click', () => {
+    if (isPoweredOn) {
+        currentStationIndex = (currentStationIndex + 1) % stations.length;
+        updateRDS();
+    }
+});
 
-#station-info {
-    font-size: 18px;
-}
+tuneDownBtn.addEventListener('click', () => {
+    if (isPoweredOn) {
+        currentStationIndex = (currentStationIndex - 1 + stations.length) % stations.length;
+        updateRDS();
+    }
+});
 
-.controls {
-    display: flex;
-    justify-content: space-between;
-}
+colorBtn.addEventListener('click', () => {
+    const colors = ['#0f0', '#00f', '#f00', '#ff0', '#0ff', '#f0f'];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    rdsDisplay.style.color = randomColor;
+});
 
-.controls button {
-    background-color: #444;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.controls button:hover {
-    background-color: #555;
-}
+updateRDS();
